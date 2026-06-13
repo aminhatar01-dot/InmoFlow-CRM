@@ -11,6 +11,10 @@ Estado verificado el 2026-06-13.
 - Produccion publica: <https://inmoflow-crm-nine.vercel.app>
 - Health check publico: <https://inmoflow-crm-nine.vercel.app/api/health>
 - Vercel Authentication: desactivado (`ssoProtection: null`)
+- Vercel envs Production ya configuradas:
+  - `APP_BASE_URL`
+  - `RATE_LIMIT_WINDOW_SECONDS`
+  - `RATE_LIMIT_MAX_REQUESTS`
 - Validaciones locales verdes:
   - `npm run format:check`
   - `npm run typecheck`
@@ -119,7 +123,8 @@ Panel directo del proyecto:
 
 <https://vercel.com/aminhatar01-8073s-projects/inmoflow-crm/settings/environment-variables>
 
-Configurar en Production, Preview y Development segun corresponda:
+Configurar en Production, Preview y Development segun corresponda. En Production ya quedaron configuradas
+`APP_BASE_URL`, `RATE_LIMIT_WINDOW_SECONDS` y `RATE_LIMIT_MAX_REQUESTS`.
 
 ```text
 NEXT_PUBLIC_SUPABASE_URL=https://<PROJECT_REF>.supabase.co
