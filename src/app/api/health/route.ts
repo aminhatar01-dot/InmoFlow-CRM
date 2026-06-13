@@ -1,9 +1,8 @@
-import { ok } from "@/shared/presentation/api-response";
-
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export async function GET(): Promise<Response> {
-  return ok({
+  return Response.json({
     status: "ok",
     service: "inmoflow-crm",
     timestamp: new Date().toISOString()
