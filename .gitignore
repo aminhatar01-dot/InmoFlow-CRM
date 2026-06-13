@@ -6,7 +6,10 @@ tsconfig.tsbuildinfo
 .env.*.local
 .npmrc
 .supabase-db-password.local
+.vercel-deploy-output.local
 .vercel/
 .tools/
 supabase/.branches/
 supabase/.temp/
+
+.vercel
