@@ -17,9 +17,19 @@ Fases completadas:
 9. Despliegue GitHub -> Vercel.
 10. Documentacion.
 
-Limitacion local actual:
+Validaciones locales verdes:
 
-`npm install` queda colgado por timeout en este entorno y no genero `node_modules` ni `package-lock.json`. Por eso `npm run typecheck` y `npm run lint` no pueden ejecutarse localmente hasta completar instalacion de dependencias.
+```bash
+npm run format:check
+npm run typecheck
+npm run lint
+npm run build
+```
+
+Produccion Vercel:
+
+- App: <https://inmoflow-crm-nine.vercel.app>
+- Health: <https://inmoflow-crm-nine.vercel.app/api/health>
 
 ## Stack
 
@@ -84,8 +94,10 @@ npm install
 4. Ejecutar validaciones:
 
 ```bash
+npm run format:check
 npm run typecheck
 npm run lint
+npm run build
 ```
 
 5. Levantar Supabase local:
@@ -111,3 +123,4 @@ npm run dev
 - [Despliegue](docs/deployment/GITHUB_VERCEL_SUPABASE.md)
 - [Runbook operativo](docs/operations/RUNBOOK.md)
 - [Estado final](docs/operations/PROJECT_STATUS.md)
+- [Handoff produccion](docs/operations/PRODUCTION_LAUNCH_HANDOFF.md)
