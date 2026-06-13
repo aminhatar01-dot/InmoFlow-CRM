@@ -41,7 +41,7 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
-    "vercel": "^41.7.0"
+    "vercel": "^54.13.0"
   },
   "engines": {
     "node": ">=22.0.0"
