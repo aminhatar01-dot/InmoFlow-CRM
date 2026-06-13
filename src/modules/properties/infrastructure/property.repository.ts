@@ -64,7 +64,11 @@ export class PropertyRepository {
     return unwrapSupabase(data, error);
   }
 
-  async update(context: TenantContext, propertyId: string, input: UpdatePropertyInput): Promise<unknown> {
+  async update(
+    context: TenantContext,
+    propertyId: string,
+    input: UpdatePropertyInput
+  ): Promise<unknown> {
     const { data, error } = await this.client
       .from("properties")
       .update({

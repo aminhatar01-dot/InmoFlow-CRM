@@ -22,8 +22,10 @@ export class AuditRepository {
       action: input.action,
       entity_type: input.entityType,
       entity_id: input.entityId ?? null,
-      before_redacted: input.before === undefined ? undefined : JSON.parse(JSON.stringify(input.before)),
-      after_redacted: input.after === undefined ? undefined : JSON.parse(JSON.stringify(input.after)),
+      before_redacted:
+        input.before === undefined ? undefined : JSON.parse(JSON.stringify(input.before)),
+      after_redacted:
+        input.after === undefined ? undefined : JSON.parse(JSON.stringify(input.after)),
       ip_address: input.ipAddress ?? null,
       user_agent: input.userAgent ?? null,
       correlation_id: input.correlationId ?? null

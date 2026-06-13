@@ -41,10 +41,12 @@ export const createLeadSchema = leadPayloadSchema.refine(validBudgetRange, {
   path: ["budgetMax"]
 });
 
-export const createLeadBodySchema = leadPayloadSchema.omit({ tenantId: true }).refine(validBudgetRange, {
-  message: "budgetMax must be greater than or equal to budgetMin",
-  path: ["budgetMax"]
-});
+export const createLeadBodySchema = leadPayloadSchema
+  .omit({ tenantId: true })
+  .refine(validBudgetRange, {
+    message: "budgetMax must be greater than or equal to budgetMin",
+    path: ["budgetMax"]
+  });
 
 export const updateLeadSchema = leadPayloadSchema
   .omit({ tenantId: true })

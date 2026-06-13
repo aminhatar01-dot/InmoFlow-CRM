@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function PropertyCreateForm({ tenantId }: Readonly<{ tenantId: string }>): React.ReactElement {
+export function PropertyCreateForm({
+  tenantId
+}: Readonly<{ tenantId: string }>): React.ReactElement {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,7 +64,11 @@ export function PropertyCreateForm({ tenantId }: Readonly<{ tenantId: string }>)
       </div>
       <div className="grid gap-2">
         <Label htmlFor="operationType">Operacion</Label>
-        <select id="operationType" name="operationType" className="h-9 rounded-md border bg-background px-3 text-sm">
+        <select
+          id="operationType"
+          name="operationType"
+          className="h-9 rounded-md border bg-background px-3 text-sm"
+        >
           <option value="sale">Venta</option>
           <option value="rent">Alquiler</option>
           <option value="temporary_rent">Temporal</option>

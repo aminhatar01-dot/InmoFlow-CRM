@@ -6,7 +6,14 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { IntegrationDisableButton } from "@/modules/marketing-ads/presentation/integration-disable-button";
 import type { IntegrationProvider } from "@/shared/infrastructure/database.types";
@@ -75,7 +82,9 @@ export default async function IntegrationsPage({
             </CardHeader>
             <CardContent>
               <Button asChild className="w-full">
-                <Link href={`/api/tenants/${tenantId}/integrations/${integration.provider}/connect`}>
+                <Link
+                  href={`/api/tenants/${tenantId}/integrations/${integration.provider}/connect`}
+                >
                   Conectar
                 </Link>
               </Button>

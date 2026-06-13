@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   description: "CRM inmobiliario multi-tenant para equipos comerciales"
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>): React.ReactElement {
+export default function RootLayout({
+  children
+}: Readonly<{ children: React.ReactNode }>): React.ReactElement {
   return (
     <html lang="es-AR">
       <body>{children}</body>

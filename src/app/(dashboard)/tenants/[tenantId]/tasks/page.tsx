@@ -3,7 +3,14 @@ import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { TaskCreateForm } from "@/modules/scheduling/presentation/task-create-form";
 
@@ -24,7 +31,10 @@ export default async function TasksPage({
 
   return (
     <AppShell tenantId={tenantId}>
-      <PageHeader title="Tareas" description="Seguimientos, recordatorios operativos y pendientes" />
+      <PageHeader
+        title="Tareas"
+        description="Seguimientos, recordatorios operativos y pendientes"
+      />
       <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
         <Card>
           <CardHeader>
@@ -51,7 +61,9 @@ export default async function TasksPage({
                       <Badge>{task.status}</Badge>
                     </TableCell>
                     <TableCell>{task.priority}</TableCell>
-                    <TableCell>{task.due_at ? new Date(task.due_at).toLocaleString("es-AR") : "Sin fecha"}</TableCell>
+                    <TableCell>
+                      {task.due_at ? new Date(task.due_at).toLocaleString("es-AR") : "Sin fecha"}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

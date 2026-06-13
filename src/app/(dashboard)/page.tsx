@@ -34,23 +34,24 @@ export default async function DashboardPage(): Promise<React.ReactElement> {
     );
   }
 
-  const [{ count: leadsCount }, { count: propertiesCount }, { count: tasksCount }] = await Promise.all([
-    client
-      .from("leads")
-      .select("*", { count: "exact", head: true })
-      .eq("tenant_id", activeTenant.id)
-      .is("deleted_at", null),
-    client
-      .from("properties")
-      .select("*", { count: "exact", head: true })
-      .eq("tenant_id", activeTenant.id)
-      .is("deleted_at", null),
-    client
-      .from("tasks")
-      .select("*", { count: "exact", head: true })
-      .eq("tenant_id", activeTenant.id)
-      .is("deleted_at", null)
-  ]);
+  const [{ count: leadsCount }, { count: propertiesCount }, { count: tasksCount }] =
+    await Promise.all([
+      client
+        .from("leads")
+        .select("*", { count: "exact", head: true })
+        .eq("tenant_id", activeTenant.id)
+        .is("deleted_at", null),
+      client
+        .from("properties")
+        .select("*", { count: "exact", head: true })
+        .eq("tenant_id", activeTenant.id)
+        .is("deleted_at", null),
+      client
+        .from("tasks")
+        .select("*", { count: "exact", head: true })
+        .eq("tenant_id", activeTenant.id)
+        .is("deleted_at", null)
+    ]);
 
   return (
     <AppShell tenantId={activeTenant.id}>
@@ -60,22 +61,38 @@ export default async function DashboardPage(): Promise<React.ReactElement> {
         action={<Badge>{activeTenant.slug}</Badge>}
       />
       <div className="grid gap-4 md:grid-cols-3">
-        <MetricCard title="Leads activos" value={leadsCount ?? 0} icon={<Users className="h-4 w-4" />} />
+        <MetricCard
+          title="Leads activos"
+          value={leadsCount ?? 0}
+          icon={<Users className="h-4 w-4" />}
+        />
         <MetricCard
           title="Inmuebles"
           value={propertiesCount ?? 0}
           icon={<Building2 className="h-4 w-4" />}
         />
-        <MetricCard title="Tareas" value={tasksCount ?? 0} icon={<ClipboardList className="h-4 w-4" />} />
+        <MetricCard
+          title="Tareas"
+          value={tasksCount ?? 0}
+          icon={<ClipboardList className="h-4 w-4" />}
+        />
       </div>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
-        <ActionCard href={`/tenants/${activeTenant.id}/leads` as Route} label="Gestionar leads" icon={<Users />} />
+        <ActionCard
+          href={`/tenants/${activeTenant.id}/leads` as Route}
+          label="Gestionar leads"
+          icon={<Users />}
+        />
         <ActionCard
           href={`/tenants/${activeTenant.id}/properties` as Route}
           label="Gestionar inmuebles"
           icon={<Home />}
         />
-        <ActionCard href={`/tenants/${activeTenant.id}/tasks` as Route} label="Gestionar tareas" icon={<ClipboardList />} />
+        <ActionCard
+          href={`/tenants/${activeTenant.id}/tasks` as Route}
+          label="Gestionar tareas"
+          icon={<ClipboardList />}
+        />
       </div>
     </AppShell>
   );

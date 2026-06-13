@@ -2,7 +2,9 @@ import type { AppSupabaseClient } from "@/lib/supabase/server";
 import { AuthenticationError, AuthorizationError } from "@/shared/domain/errors";
 import type { AppRole, TenantContext } from "@/shared/domain/types";
 
-export async function requireUser(client: AppSupabaseClient): Promise<{ id: string; email?: string }> {
+export async function requireUser(
+  client: AppSupabaseClient
+): Promise<{ id: string; email?: string }> {
   const {
     data: { user },
     error

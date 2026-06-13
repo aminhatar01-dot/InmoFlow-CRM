@@ -4,9 +4,7 @@ import { requireEnvValue } from "@/config/env";
 const algorithm = "aes-256-gcm";
 
 function encryptionKey(): Buffer {
-  return createHash("sha256")
-    .update(requireEnvValue("INTEGRATION_TOKEN_ENCRYPTION_KEY"))
-    .digest();
+  return createHash("sha256").update(requireEnvValue("INTEGRATION_TOKEN_ENCRYPTION_KEY")).digest();
 }
 
 export function encryptSecret(value: string): string {
@@ -15,7 +13,11 @@ export function encryptSecret(value: string): string {
   const encrypted = Buffer.concat([cipher.update(value, "utf8"), cipher.final()]);
   const authTag = cipher.getAuthTag();
 
-  return [iv.toString("base64url"), authTag.toString("base64url"), encrypted.toString("base64url")].join(".");
+  return [
+    iv.toString("base64url"),
+    authTag.toString("base64url"),
+    encrypted.toString("base64url")
+  ].join(".");
 }
 
 export function decryptSecret(value: string): string {

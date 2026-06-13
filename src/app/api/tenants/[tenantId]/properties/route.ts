@@ -33,7 +33,9 @@ export async function GET(
 
     const query = parseSearchParams(
       request.url,
-      propertyFiltersSchema.omit({ tenantId: true }).extend({ tenantId: z.string().uuid().default(tenantId) })
+      propertyFiltersSchema
+        .omit({ tenantId: true })
+        .extend({ tenantId: z.string().uuid().default(tenantId) })
     );
     const client = await createSupabaseServerClient();
     const service = new PropertyService(client);

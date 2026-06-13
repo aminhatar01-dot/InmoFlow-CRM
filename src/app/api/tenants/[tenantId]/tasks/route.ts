@@ -30,7 +30,9 @@ export async function GET(
 
     const query = parseSearchParams(
       request.url,
-      taskFiltersSchema.omit({ tenantId: true }).extend({ tenantId: z.string().uuid().default(tenantId) })
+      taskFiltersSchema
+        .omit({ tenantId: true })
+        .extend({ tenantId: z.string().uuid().default(tenantId) })
     );
     const client = await createSupabaseServerClient();
     const service = new TaskService(client);

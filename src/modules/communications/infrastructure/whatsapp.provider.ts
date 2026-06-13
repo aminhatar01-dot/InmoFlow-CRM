@@ -5,8 +5,16 @@ const graphApiBaseUrl = "https://graph.facebook.com/v25.0";
 
 export class WhatsAppProvider {
   verifyWebhook(mode: string | null, token: string | null, challenge: string | null): string {
-    if (mode !== "subscribe" || !challenge || token !== requireEnvValue("META_WEBHOOK_VERIFY_TOKEN")) {
-      throw new AppError(403, "whatsapp_webhook_verification_failed", "Webhook verification failed");
+    if (
+      mode !== "subscribe" ||
+      !challenge ||
+      token !== requireEnvValue("META_WEBHOOK_VERIFY_TOKEN")
+    ) {
+      throw new AppError(
+        403,
+        "whatsapp_webhook_verification_failed",
+        "Webhook verification failed"
+      );
     }
 
     return challenge;
@@ -41,7 +49,11 @@ export class WhatsAppProvider {
     const messageId = payload.messages?.[0]?.id;
 
     if (!messageId) {
-      throw new AppError(502, "whatsapp_send_failed", "WhatsApp response did not include message id");
+      throw new AppError(
+        502,
+        "whatsapp_send_failed",
+        "WhatsApp response did not include message id"
+      );
     }
 
     return { messageId };

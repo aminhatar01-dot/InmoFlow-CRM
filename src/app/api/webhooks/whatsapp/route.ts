@@ -27,20 +27,22 @@ export async function POST(request: Request): Promise<Response> {
       entry?: Array<{ id?: string; changes?: unknown[] }>;
     };
 
-    await createSupabaseServiceClient().from("system_logs").insert({
-      tenant_id: null,
-      user_id: null,
-      correlation_id: null,
-      module: "communications",
-      operation: "whatsapp.webhook.received",
-      severity: "info",
-      message: "WhatsApp webhook received",
-      metadata_redacted: {
-        object: payload.object,
-        entryCount: payload.entry?.length ?? 0
-      },
-      duration_ms: null
-    });
+    await createSupabaseServiceClient()
+      .from("system_logs")
+      .insert({
+        tenant_id: null,
+        user_id: null,
+        correlation_id: null,
+        module: "communications",
+        operation: "whatsapp.webhook.received",
+        severity: "info",
+        message: "WhatsApp webhook received",
+        metadata_redacted: {
+          object: payload.object,
+          entryCount: payload.entry?.length ?? 0
+        },
+        duration_ms: null
+      });
 
     return ok({ received: true });
   } catch (error) {

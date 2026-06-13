@@ -3,7 +3,14 @@ import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { LeadCreateForm } from "@/modules/crm-leads/presentation/lead-create-form";
 
@@ -47,7 +54,9 @@ export default async function LeadsPage({
                     <TableCell className="font-medium">{lead.display_name}</TableCell>
                     <TableCell>
                       <div>{lead.email ?? "Sin email"}</div>
-                      <div className="text-xs text-muted-foreground">{lead.phone ?? "Sin telefono"}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {lead.phone ?? "Sin telefono"}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Badge>{lead.status}</Badge>

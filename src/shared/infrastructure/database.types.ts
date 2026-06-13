@@ -241,10 +241,26 @@ export type Database = {
       leads: Table<LeadRow, Partial<LeadRow>, Partial<LeadRow>>;
       properties: Table<PropertyRow, Partial<PropertyRow>, Partial<PropertyRow>>;
       tasks: Table<TaskRow, Partial<TaskRow>, Partial<TaskRow>>;
-      integration_connections: Table<IntegrationConnectionRow, Partial<IntegrationConnectionRow>, Partial<IntegrationConnectionRow>>;
-      integration_tokens: Table<IntegrationTokenRow, Partial<IntegrationTokenRow>, Partial<IntegrationTokenRow>>;
-      integration_sync_states: Table<IntegrationSyncStateRow, Partial<IntegrationSyncStateRow>, Partial<IntegrationSyncStateRow>>;
-      communication_channels: Table<CommunicationChannelRow, Partial<CommunicationChannelRow>, Partial<CommunicationChannelRow>>;
+      integration_connections: Table<
+        IntegrationConnectionRow,
+        Partial<IntegrationConnectionRow>,
+        Partial<IntegrationConnectionRow>
+      >;
+      integration_tokens: Table<
+        IntegrationTokenRow,
+        Partial<IntegrationTokenRow>,
+        Partial<IntegrationTokenRow>
+      >;
+      integration_sync_states: Table<
+        IntegrationSyncStateRow,
+        Partial<IntegrationSyncStateRow>,
+        Partial<IntegrationSyncStateRow>
+      >;
+      communication_channels: Table<
+        CommunicationChannelRow,
+        Partial<CommunicationChannelRow>,
+        Partial<CommunicationChannelRow>
+      >;
       audit_logs: Table<Record<string, unknown>, AuditLogInsert, never>;
       rate_limit_events: Table<Record<string, unknown>, RateLimitInsert, never>;
       system_logs: Table<Record<string, unknown>, SystemLogInsert, never>;

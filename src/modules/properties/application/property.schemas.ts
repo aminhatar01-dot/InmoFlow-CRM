@@ -19,7 +19,9 @@ export const createPropertySchema = z.object({
   description: z.string().trim().max(10000).optional(),
   propertyType: z.string().trim().min(1).max(120),
   operationType: z.enum(["sale", "rent", "temporary_rent"]),
-  status: z.enum(["draft", "available", "reserved", "sold", "rented", "paused", "archived"]).default("draft"),
+  status: z
+    .enum(["draft", "available", "reserved", "sold", "rented", "paused", "archived"])
+    .default("draft"),
   ownerName: z.string().trim().max(200).optional(),
   ownerContact: z.string().trim().max(200).optional(),
   internalNotes: z.string().trim().max(5000).optional(),

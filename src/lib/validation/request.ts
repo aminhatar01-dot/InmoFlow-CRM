@@ -22,10 +22,7 @@ export async function parseJsonBody<T extends z.ZodTypeAny>(
   return parsed.data;
 }
 
-export function parseSearchParams<T extends z.ZodTypeAny>(
-  url: string,
-  schema: T
-): z.infer<T> {
+export function parseSearchParams<T extends z.ZodTypeAny>(url: string, schema: T): z.infer<T> {
   const params = Object.fromEntries(new URL(url).searchParams.entries());
   const parsed = schema.safeParse(params);
 

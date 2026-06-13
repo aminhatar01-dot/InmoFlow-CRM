@@ -77,7 +77,9 @@ export class GoogleProvider {
   }
 
   private async getTokenInfo(accessToken: string): Promise<{ email?: string }> {
-    const response = await fetch(`${googleTokenInfoUrl}?access_token=${encodeURIComponent(accessToken)}`);
+    const response = await fetch(
+      `${googleTokenInfoUrl}?access_token=${encodeURIComponent(accessToken)}`
+    );
 
     if (!response.ok) {
       return {};
@@ -86,7 +88,9 @@ export class GoogleProvider {
     return (await response.json()) as { email?: string };
   }
 
-  async getGmailProfile(accessToken: string): Promise<{ emailAddress: string; messagesTotal: number }> {
+  async getGmailProfile(
+    accessToken: string
+  ): Promise<{ emailAddress: string; messagesTotal: number }> {
     const response = await fetch(gmailProfileUrl, {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
@@ -163,7 +167,9 @@ export class GoogleProvider {
     return (await response.json()) as { id: string; htmlLink: string };
   }
 
-  async listAccessibleGoogleAdsCustomers(accessToken: string): Promise<{ resourceNames: string[] }> {
+  async listAccessibleGoogleAdsCustomers(
+    accessToken: string
+  ): Promise<{ resourceNames: string[] }> {
     const response = await fetch(googleAdsAccessibleCustomersUrl, {
       method: "GET",
       headers: {

@@ -1,5 +1,12 @@
-import { createOAuthState, parseOAuthState } from "@/modules/marketing-ads/infrastructure/oauth-state";
-import { requireTeamManager, requireTenantContext, requireUser } from "@/lib/security/tenant-context";
+import {
+  createOAuthState,
+  parseOAuthState
+} from "@/modules/marketing-ads/infrastructure/oauth-state";
+import {
+  requireTeamManager,
+  requireTenantContext,
+  requireUser
+} from "@/lib/security/tenant-context";
 import type { AppSupabaseClient } from "@/lib/supabase/server";
 import { AuditRepository } from "@/shared/infrastructure/audit.repository";
 import type { IntegrationProvider } from "@/shared/infrastructure/database.types";
@@ -41,7 +48,10 @@ export class IntegrationService {
       return new MetaProvider().createAuthorizationUrl(state);
     }
 
-    return new GoogleProvider().createAuthorizationUrl(parsed.provider as GoogleIntegrationProvider, state);
+    return new GoogleProvider().createAuthorizationUrl(
+      parsed.provider as GoogleIntegrationProvider,
+      state
+    );
   }
 
   async completeGoogleCallback(code: string, state: string): Promise<unknown> {

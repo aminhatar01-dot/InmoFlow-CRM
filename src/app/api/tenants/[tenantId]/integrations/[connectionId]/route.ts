@@ -6,7 +6,10 @@ import { handleApiError, ok } from "@/shared/presentation/api-response";
 
 export const dynamic = "force-dynamic";
 
-const routeParamsSchema = z.object({ tenantId: z.string().uuid(), connectionId: z.string().uuid() });
+const routeParamsSchema = z.object({
+  tenantId: z.string().uuid(),
+  connectionId: z.string().uuid()
+});
 
 function requestIp(request: Request): string | undefined {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();

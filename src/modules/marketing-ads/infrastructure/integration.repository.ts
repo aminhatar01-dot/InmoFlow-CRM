@@ -51,7 +51,9 @@ export class IntegrationRepository {
         tenant_id: context.tenantId,
         connection_id: savedConnection.id,
         access_token_encrypted: encryptSecret(tokenSet.accessToken),
-        refresh_token_encrypted: tokenSet.refreshToken ? encryptSecret(tokenSet.refreshToken) : null,
+        refresh_token_encrypted: tokenSet.refreshToken
+          ? encryptSecret(tokenSet.refreshToken)
+          : null,
         expires_at: tokenSet.expiresAt ?? null,
         rotation_required_at: null
       },
