@@ -6,6 +6,8 @@ const errorMessages: Record<string, string> = {
     "Google OAuth aun no esta configurado para esta instancia. Falta cargar el Client ID y Client Secret de la app Google del producto.",
   missing_code: "Google no devolvio un codigo de autorizacion valido.",
   oauth_start_failed: "No se pudo iniciar el login con Google.",
+  oauth_provider_error:
+    "Google no autorizo el ingreso. Revisa la configuracion OAuth e intenta nuevamente.",
   session_exchange_failed: "No se pudo crear la sesion. Intenta ingresar nuevamente."
 };
 
