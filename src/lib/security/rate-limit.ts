@@ -12,44 +12,41 @@ type RateLimitInput = {
   ip?: string;
 };
 
+type RateLimitBucket = {
+  count: number;
+  windowEnd: number;
+};
+
+const rateLimitBuckets = new Map<string, RateLimitBucket>();
+
 export async function enforceRateLimit(input: RateLimitInput): Promise<void> {
   const env = getEnv();
   const now = new Date();
-  const windowStart = new Date(
-    Math.floor(now.getTime() / (env.RATE_LIMIT_WINDOW_SECONDS * 1000)) *
-      env.RATE_LIMIT_WINDOW_SECONDS *
-      1000
-  );
-  const windowEnd = new Date(windowStart.getTime() + env.RATE_LIMIT_WINDOW_SECONDS * 1000);
-  const ipHash = input.ip ? createHash("sha256").update(input.ip).digest("hex") : null;
+  const windowMs = env.RATE_LIMIT_WINDOW_SECONDS * 1000;
+  const windowStart = Math.floor(now.getTime() / windowMs) * windowMs;
+  const windowEnd = windowStart + windowMs;
+  const hashedKey = createHash("sha256")
+    .update([input.scope, input.key, input.tenantId, input.userId, input.ip].join(":"))
+    .digest("hex");
+  const bucket = rateLimitBuckets.get(hashedKey);
 
-  const { count, error: countError } = await input.client
-    .from("rate_limit_events")
-    .select("*", { count: "exact", head: true })
-    .eq("scope", input.scope)
-    .eq("limit_key", input.key)
-    .gte("created_at", windowStart.toISOString())
-    .lt("created_at", windowEnd.toISOString());
-
-  if (countError) {
-    throw new AppError(500, "rate_limit_unavailable", "Rate limit check failed");
+  for (const [key, value] of rateLimitBuckets.entries()) {
+    if (value.windowEnd <= now.getTime()) {
+      rateLimitBuckets.delete(key);
+    }
   }
 
-  const blocked = (count ?? 0) >= env.RATE_LIMIT_MAX_REQUESTS;
+  const nextBucket =
+    bucket && bucket.windowEnd > now.getTime()
+      ? { count: bucket.count + 1, windowEnd: bucket.windowEnd }
+      : { count: 1, windowEnd };
 
-  await input.client.from("rate_limit_events").insert({
-    tenant_id: input.tenantId ?? null,
-    user_id: input.userId ?? null,
-    ip_hash: ipHash,
-    scope: input.scope,
-    limit_key: input.key,
-    count: (count ?? 0) + 1,
-    window_start: windowStart.toISOString(),
-    window_end: windowEnd.toISOString(),
-    blocked
-  });
+  rateLimitBuckets.set(hashedKey, nextBucket);
 
-  if (blocked) {
+  if (nextBucket.count > env.RATE_LIMIT_MAX_REQUESTS) {
     throw new AppError(429, "rate_limit_exceeded", "Too many requests");
   }
+
+  void input.client;
+  void windowStart;
 }

@@ -20,11 +20,25 @@ export function TenantOnboardingForm(): React.ReactElement {
     const name = String(form.get("name") ?? "");
     const slug = String(form.get("slug") ?? "");
 
-    const response = await fetch("/api/tenants", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, slug })
-    });
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    let response: Response;
+
+    try {
+      response = await fetch("/api/tenants", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, slug }),
+        signal: controller.signal
+      });
+    } catch {
+      setIsSubmitting(false);
+      setError("La solicitud tardo demasiado. Intenta nuevamente.");
+      return;
+    } finally {
+      window.clearTimeout(timeout);
+    }
 
     setIsSubmitting(false);
 
@@ -34,7 +48,14 @@ export function TenantOnboardingForm(): React.ReactElement {
       return;
     }
 
-    router.refresh();
+    const payload = (await response.json()) as { data?: { id?: string } };
+
+    if (payload.data?.id) {
+      router.push(`/tenants/${payload.data.id}/leads`);
+      return;
+    }
+
+    router.push("/");
   }
 
   return (

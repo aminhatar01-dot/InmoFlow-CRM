@@ -1,4 +1,5 @@
 import type { AppSupabaseClient } from "@/lib/supabase/server";
+import { createSupabaseServiceClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/security/tenant-context";
 import { createTenantSchema, type CreateTenantInput } from "./tenant.schemas";
 import { TenantRepository } from "../infrastructure/tenant.repository";
@@ -18,6 +19,6 @@ export class TenantService {
   async createTenant(input: CreateTenantInput): Promise<unknown> {
     const user = await requireUser(this.client);
     const parsed = createTenantSchema.parse(input);
-    return this.tenants.createForUser(user.id, parsed);
+    return new TenantRepository(createSupabaseServiceClient()).createForUser(user.id, parsed);
   }
 }
