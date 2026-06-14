@@ -1,22 +1,40 @@
 import { z } from "zod";
 
+const optionalString = (
+  schema: z.ZodString
+): z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, unknown> =>
+  z.preprocess((value) => (value === "" ? undefined : value), schema.optional());
+
+const optionalUrl = optionalString(z.string().url());
+const optionalNonEmptyString = optionalString(z.string().min(1));
+const optionalEncryptionKey = optionalString(z.string().min(32));
+
 const envSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
-  APP_BASE_URL: z.string().url().default("http://localhost:3000"),
-  RATE_LIMIT_WINDOW_SECONDS: z.coerce.number().int().positive().default(60),
-  RATE_LIMIT_MAX_REQUESTS: z.coerce.number().int().positive().default(120),
-  INTEGRATION_TOKEN_ENCRYPTION_KEY: z.string().min(32).optional(),
-  GOOGLE_OAUTH_CLIENT_ID: z.string().min(1).optional(),
-  GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(1).optional(),
-  GOOGLE_OAUTH_REDIRECT_URI: z.string().url().optional(),
-  GOOGLE_ADS_DEVELOPER_TOKEN: z.string().min(1).optional(),
-  META_APP_ID: z.string().min(1).optional(),
-  META_APP_SECRET: z.string().min(1).optional(),
-  META_OAUTH_REDIRECT_URI: z.string().url().optional(),
-  META_WEBHOOK_VERIFY_TOKEN: z.string().min(1).optional(),
-  WHATSAPP_PHONE_NUMBER_ID: z.string().min(1).optional()
+  SUPABASE_SERVICE_ROLE_KEY: optionalNonEmptyString,
+  APP_BASE_URL: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.string().url().default("http://localhost:3000")
+  ),
+  RATE_LIMIT_WINDOW_SECONDS: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.coerce.number().int().positive().default(60)
+  ),
+  RATE_LIMIT_MAX_REQUESTS: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.coerce.number().int().positive().default(120)
+  ),
+  INTEGRATION_TOKEN_ENCRYPTION_KEY: optionalEncryptionKey,
+  GOOGLE_OAUTH_CLIENT_ID: optionalNonEmptyString,
+  GOOGLE_OAUTH_CLIENT_SECRET: optionalNonEmptyString,
+  GOOGLE_OAUTH_REDIRECT_URI: optionalUrl,
+  GOOGLE_ADS_DEVELOPER_TOKEN: optionalNonEmptyString,
+  META_APP_ID: optionalNonEmptyString,
+  META_APP_SECRET: optionalNonEmptyString,
+  META_OAUTH_REDIRECT_URI: optionalUrl,
+  META_WEBHOOK_VERIFY_TOKEN: optionalNonEmptyString,
+  WHATSAPP_PHONE_NUMBER_ID: optionalNonEmptyString
 });
 
 export type AppEnv = z.infer<typeof envSchema>;
