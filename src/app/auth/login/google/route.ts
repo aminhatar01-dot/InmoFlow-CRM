@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getEnv } from "@/config/env";
 
 export async function GET(): Promise<Response> {
@@ -10,17 +9,9 @@ export async function GET(): Promise<Response> {
     redirect("/login?error=google_oauth_not_configured");
   }
 
-  const client = await createSupabaseServerClient();
-  const { data, error } = await client.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${env.APP_BASE_URL}/auth/callback`
-    }
-  });
+  const authorizeUrl = new URL("/auth/v1/authorize", env.NEXT_PUBLIC_SUPABASE_URL);
+  authorizeUrl.searchParams.set("provider", "google");
+  authorizeUrl.searchParams.set("redirect_to", `${env.APP_BASE_URL}/auth/callback`);
 
-  if (error || !data.url) {
-    redirect("/login?error=oauth_start_failed");
-  }
-
-  return NextResponse.redirect(data.url);
+  return NextResponse.redirect(authorizeUrl);
 }
