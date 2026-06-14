@@ -39,7 +39,7 @@ export default async function LoginPage({
           </div>
         ) : null}
         <Button asChild className="w-full">
-          <a href="/auth/login/google">Continuar con Google</a>
+          <a href="/api/auth/google/start">Continuar con Google</a>
         </Button>
       </section>
     </main>
