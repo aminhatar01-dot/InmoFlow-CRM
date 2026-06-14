@@ -1,0 +1,14 @@
+.git
+.next
+.tools
+.vercel
+node_modules
+supabase/.branches
+tsconfig.tsbuildinfo
+.env*.local
+.supabase-db-password.local
+.vercel-deploy-output.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
