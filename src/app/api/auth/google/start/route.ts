@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getEnv } from "@/config/env";
 
+export const runtime = "edge";
+
 export async function GET(): Promise<Response> {
   const env = getEnv();
 
