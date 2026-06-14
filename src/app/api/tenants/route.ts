@@ -6,6 +6,7 @@ import { TenantService } from "@/modules/identity-tenancy/application/tenant.ser
 import { created, handleApiError, ok } from "@/shared/presentation/api-response";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 function requestIp(request: Request): string | undefined {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();

@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { getEnv } from "@/config/env";
 import type { AppSupabaseClient } from "@/lib/supabase/server";
 import { AppError } from "@/shared/domain/errors";
@@ -25,9 +24,7 @@ export async function enforceRateLimit(input: RateLimitInput): Promise<void> {
   const windowMs = env.RATE_LIMIT_WINDOW_SECONDS * 1000;
   const windowStart = Math.floor(now.getTime() / windowMs) * windowMs;
   const windowEnd = windowStart + windowMs;
-  const hashedKey = createHash("sha256")
-    .update([input.scope, input.key, input.tenantId, input.userId, input.ip].join(":"))
-    .digest("hex");
+  const hashedKey = [input.scope, input.key, input.tenantId, input.userId, input.ip].join(":");
   const bucket = rateLimitBuckets.get(hashedKey);
 
   for (const [key, value] of rateLimitBuckets.entries()) {
