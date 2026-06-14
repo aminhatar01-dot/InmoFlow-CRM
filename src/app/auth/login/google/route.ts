@@ -4,9 +4,13 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getEnv } from "@/config/env";
 
 export async function GET(): Promise<Response> {
-  const client = await createSupabaseServerClient();
   const env = getEnv();
 
+  if (!env.GOOGLE_OAUTH_CLIENT_ID || !env.GOOGLE_OAUTH_CLIENT_SECRET) {
+    redirect("/login?error=google_oauth_not_configured");
+  }
+
+  const client = await createSupabaseServerClient();
   const { data, error } = await client.auth.signInWithOAuth({
     provider: "google",
     options: {
